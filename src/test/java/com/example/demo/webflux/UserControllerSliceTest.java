@@ -12,9 +12,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
-@AutoConfigureWebTestClient
-public class UserControllerTest {
+@WebFluxTest(controllers = UserController.class)
+public class UserControllerSliceTest {
 
     @Autowired
     private WebTestClient client;
