@@ -2,15 +2,15 @@ package com.example.demo.webflux;
 
 import org.springframework.data.annotation.Id;
 
-public class User {
+public class User2 {
     @Id
     private int id;
     private String name;
 
-    public User() {
+    public User2() {
     }
 
-    public User(int id, String name) {
+    public User2(int id, String name) {
         this.id = id;
         this.name = name;
     }

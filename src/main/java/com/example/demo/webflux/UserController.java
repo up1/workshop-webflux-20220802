@@ -1,5 +1,6 @@
 package com.example.demo.webflux;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,14 +12,17 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/users")
 public class UserController {
 
+    @Autowired
+    private UserRepository userRepository;
+
     @GetMapping
-    public Flux<User> getAll() {
-        return Flux.just(new User(), new User());
+    public Flux<User2> getAll() {
+        return userRepository.findAll();
     }
 
     @GetMapping("/{id}")
-    public Mono<User> getById(@PathVariable int id) {
-        return Mono.just(new User());
+    public Mono<User2> getById(@PathVariable int id) {
+        return Mono.just(new User2());
     }
 
 }
