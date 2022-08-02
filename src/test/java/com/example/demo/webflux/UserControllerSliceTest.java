@@ -8,12 +8,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.test.web.reactive.server.WebTestClient.ListBodySpec;
+import reactor.core.publisher.Flux;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static reactor.core.publisher.Mono.when;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 @WebFluxTest(controllers = UserController.class)
@@ -29,14 +29,15 @@ public class UserControllerSliceTest {
     public void case_success_with_getAllUser() {
         List<User2> users = new ArrayList<>();
         users.add(new User2(1, "User 01"));
-//        when(userRepository.findAll()).thenReturn(Flux.fromIterable(users));
+        users.add(new User2(2, "User 02"));
+        when(userRepository.findAll()).thenReturn(Flux.fromIterable(users));
         ListBodySpec<User2> response = client.get().uri("/users")
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(User2.class);
 
         List<User2> results = response.returnResult().getResponseBody();
-        assertEquals(0, results.size());
+        assertEquals(2, results.size());
     }
 
 }
